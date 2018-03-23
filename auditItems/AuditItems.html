@@ -1,0 +1,509 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>教师评价系统后台操作页面</title>
+
+<link href="css/basic.css" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<link href="css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="css/font-awesome.css" rel="stylesheet"/>
+</head>
+<body>
+	<div id="wrapper">
+		<nav class="navbar  navbar-cls-top " role="navigation"
+			style="margin-bottom: 0">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">翡翠教育</a>
+			</div>
+		</nav>
+		<!-- 导航 -->
+		<nav class="navbar-default navbar-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu">
+					<!--查询主页面的侧边栏按钮-->
+					<li><a href="queryExport.jsp"><i class="fa fa-dashboard "></i>查询导出</a>
+					</li>
+					<!--编辑菜单栏按钮-->
+					<li><a href="abnormal.jsp"><i class="fa fa-anchor"></i>异常数据</a></li>
+					<li><a href="teacherManage.jsp"><i class="fa fa-edit"></i>老师管理</a></li>
+					<li><a href="dataAnalysis.jsp"><i class="fa fa-bar-chart-o"></i>数据分析</a></li>
+					<li><a href="dataStatistics.jsp"><i class="fa fa-key"></i>数据统计</a></li>
+					<li><a href="exportTable.jsp"><i class="glyphicon glyphicon-file"></i>导出表格</a></li>
+					<li id="auditItemsId"><a class="active-menu" href="AuditItems.html"><i class="glyphicon glyphicon-list-alt"></i>项目审阅</a></li>
+				</ul>
+			</div>
+		</nav>
+		<!-- 主页面  -->
+		<div id="page-wrapper" >
+			<div id="page-inner" id="mainPage-inner">
+				<!--主页面头部-->
+				<div class="portlet box grey">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-user"></i>项目审阅
+						</div>
+					</div>
+					<div class="panel panel-default" style="margin-bottom:10px;">
+						<div class="panel-heading">查询条件</div>
+						<div class="panel-body">
+							<form id="formSearch" class="form-horizontal">
+								<div class="form-group" style="margin-top: 15px">
+									<div class="col-lg-12 col-md-12">
+										<label class="control-label col-lg-1  col-md-1"
+											for="txt_search_departmentname">大区</label>
+										<div class="col-lg-3 col-md-3">
+											<select class="form-control" id="bigArea">
+												<option value>请选择</option>
+											</select>
+										</div>
+										<label class="control-label col-lg-1  col-md-1"
+											for="txt_search_statu">学校</label>
+										<div class="col-lg-3  col-md-3">
+											<select class="form-control" id="schools">
+												<option value>请选择</option>
+											</select>
+										</div>
+										<label class="control-label col-lg-1  col-md-1"
+											for="txt_search_statu">专业</label>
+										<div class="col-lg-3 col-md-3">
+											<select class="form-control " id="profession">
+												<option value>请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group" style="margin-top: 15px">
+									<div class="col-lg-12 col-md-12">
+										<label class="control-label col-lg-1  col-md-1"
+											for="txt_search_departmentname">开始</label>
+										<div class="col-lg-3 col-md-3">
+											<input id="startInput" class="form-control" type="text"/>
+										</div>
+										<label class="control-label col-lg-1  col-md-1"
+											for="txt_search_statu">结束</label>
+										<div class="col-lg-3  col-md-3">
+											<input id="endInput" class="form-control" type="text"/>
+										</div>
+										<div class="col-lg-4 col-md-4">
+											<button type="button" id="searchBtn" class="btn btn-primary">查询</button>
+										</div>
+									</div>
+								</div>
+								
+							</form>
+						</div>
+					</div>
+					<div id="btnAdd" style="margin-right: 5px; margin-top: -1px;">
+						<button href="#" class="btn btn-default btnAdd">
+							<span class="glyphicon glyphicon-plus"></span>新增	
+						</button>
+						<button  href="#" class="btn btn-default daochu">
+							<span class="glyphicon glyphicon-export icon-share
+"></span>导出
+						</button>
+					</div>
+					<div class="tableStyle">
+						<table id="tb_departments">
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!--点击新增按钮的新页面-->
+			<div id="newAddPage-wrapper">
+				<div id="newAddPage-inner">
+					<!--主页面头部-->
+					<div class="portlet box grey">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="icon-user"></i>项目审阅
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div><!--主页面结束-->
+		</div><!--主页面结束-->
+		
+		
+	</div>
+	<!-- 新增的模态框（Modal） -->
+<!--	<div class="modal fade  bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">新增数据</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row">
+				<div class="col-xs-6">
+					大区：<select name="daqu" id="bigRegion_add"
+						style="width:174px;height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					学校：<select name="school" id="school_add"
+						style="width:174px; height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					专业：<select name="subject" id="subject_add"
+						style="width:174px;height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					讲师：<input name="teacherName" id="teacher_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					班级：<input name="className"  id="class_add"
+						style="width:174px; height:28px;"/>
+				</div>
+				<div class="col-xs-6">
+					分数：<input name="score" type="number"  id="score_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					等级：<select name="level"  id="level_add"
+						style="width:174px; height:28px;">
+						<option value="优">优</option>
+						<option value="良">良</option>
+						<option value="中">中</option>
+						<option value="差">差</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					人次：<input name="personCount" type="number"  id="personCount_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					审阅状态：<select name="shenyueStatus"  id="shenyueStatus_add"
+								style="width:174px; height:28px;">
+								<option value>请选择</option>
+								<option value="未阅">未阅</option>
+								<option value="已阅">已阅</option>
+							</select>
+				</div>
+				<div class="col-xs-6">
+					在线老师：<input name="secondTeacher" id="secondTeacher_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					项目提交日期:
+					<input id="commitDate_add" class="form-control" type="text"></input>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					项目评价:
+					<textarea style="resize: none;" class="form-control" rows="3" id="evaluate_add"></textarea>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					原因：<textarea style="resize: none;" class="form-control" rows="3"  id="reason_add"></textarea>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					附件：<form class='uploadForm' id='bannerform' enctype='multipart/form-data'>
+							<input name='uploadFile' accept='.doc,.docx,.xlsx,.xls' class="form-control" type="file"  id="file_add"></input>
+						</form>
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button id="cancelBtn" type="button" class="btn btn-default">取消</button>
+	        <button id="saveBtn" type="button" class="btn btn-primary">提交</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>-->
+	
+	
+	
+	
+	<!-- 新增的模态框（Modal） -->
+	<!--<div class="modal fade  bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content"  >
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">新增数据</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row">
+				<div class="col-xs-12">
+					请输入教师testInfo系统账号：<input name="teacherName" id="teacher_add"
+						style="width:358px; height:28px;"/>
+				</div>	
+			</div>
+	      	<div class="row"  style="margin-top:20px;">
+				<div class="col-xs-6">
+					大&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：<select name="daqu" id="bigRegion_add"
+						style="width:174px;height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校：<select name="school" id="school_add"
+						style="width:174px; height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业：<select name="subject" id="subject_add"
+						style="width:174px;height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					在线讲师：<input name="teacherName" id="teacher_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：<input name="className"  id="class_add"
+						style="width:174px; height:28px;"/>
+				</div>
+				<div class="col-xs-6">
+					分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数：<input name="score" type="number"  id="score_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					等&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：<select name="level"  id="level_add"
+						style="width:174px; height:28px;">
+						<option value="优">优</option>
+						<option value="良">良</option>
+						<option value="中">中</option>
+						<option value="差">差</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次：<input name="personCount" type="number"  id="personCount_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					审阅状态：<select name="shenyueStatus"  id="shenyueStatus_add"
+								style="width:174px; height:28px;">
+								<option value>请选择</option>
+								<option value="未阅">未阅</option>
+								<option value="已阅">已阅</option>
+							</select>
+				</div>
+				<div class="col-xs-6">
+					在线老师：<input name="secondTeacher" id="secondTeacher_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					项目提交日期:
+					<input id="commitDate_add" class="form-control" type="text"></input>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					项目评价:
+					<textarea style="resize: none;" class="form-control" rows="3" id="evaluate_add"></textarea>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					原因：<textarea style="resize: none;" class="form-control" rows="3"  id="reason_add"></textarea>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					附件：<form class='uploadForm' id='bannerform' enctype='multipart/form-data'>
+							<input name='uploadFile' accept='.doc,.docx,.xlsx,.xls' class="form-control" type="file"  id="file_add"></input>
+						</form>
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button id="cancelBtn" type="button" class="btn btn-default">取消</button>
+	        <button id="saveBtn" type="button" class="btn btn-primary">提交</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+-->
+	<!-- 编辑的模态框---------start -->
+	<div class="modal fade  bs-example-modal-lg" tabindex="-1" id="myEditModal" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">修改信息</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<span id="none" style="display: none;"></span>
+	      	<div class="row">
+				<div class="col-xs-6">
+					大区：<select name="daqu" id="bigRegionEdit"
+						style="width:174px;height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					学校：<select name="school" id="schoolEdit"
+						style="width:174px; height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					专业：<select name="subject" id="profEdit"
+						style="width:174px;height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					讲师：<input name="teacherName" id="teacherEdit"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					班级：<input name="className"  id="classEdit"
+						style="width:174px; height:28px;"/>
+				</div>
+				<div class="col-xs-6">
+					分数：<input name="score" type="number"  id="scoreEdit"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					等级：<select name="level"  id="levelEdit"
+						style="width:174px; height:28px;">
+						<option value="优">优</option>
+						<option value="良">良</option>
+						<option value="中">中</option>
+						<option value="差">差</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					人次：<input name="personCount" type="number"  id="personCountEdit"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					审阅状态：<select name="shenyueStatus"  id="shenyueStatusEdit"
+								style="width:174px; height:28px;">
+								<option value>请选择</option>
+								<option value="未阅">未阅</option>
+								<option value="已阅">已阅</option>
+							</select>
+				</div>
+				<div class="col-xs-6">
+					在线老师：<input name="secondTeacher" id="secondTeacherEdit"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					项目提交日期:
+					<input id="commitDateEdit" class="form-control" type="text"></input>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					项目评价:
+					<textarea style="resize: none;" class="form-control" rows="3" id="evaluateEdit"></textarea>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					原因：<textarea style="resize: none;" class="form-control" rows="3"  id="reasonEdit"></textarea>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					附件：<form class='uploadForm' id='bannerformEdit' enctype='multipart/form-data'>
+							<input name='uploadFile' accept='.doc,.docx,.xlsx,.xls' class="form-control" type="file"  id="fileEdit"></input>
+						</form>
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button id="abolishBtn" type="button" class="btn btn-default">取消</button>
+	        <button id="referBtn" type="button" class="btn btn-primary">提交</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+		
+	<!-- 编辑的模态框---------ending -->
+	<!--加载等待-->
+	<div class="modal fade" id="loadingImg"
+		style="position:absolute;left:50%;top:40%;">
+		<img src="images/loader.gif" alt="等待图标" />
+	</div>
+	
+	
+	
+	
+	<!--尾部-->
+	<div id="footer-sec">
+		<div class="footer">
+			<div>
+				<p style="text-align:center;">总部地址:北京市海淀区小南庄怡秀园甲一号亿德大厦10层
+					电话：010-61943240</p>
+				<p style="text-align:center;">Copyright © 2005-2020
+					北京翡翠教育科技有限公司，All Rights Reserved 京ICP备12036804号-23</p>
+			</div>
+		</div>
+	</div>
+	<script src="js/libs/jquery-1.9.1.min.js"></script>
+	<script src="js/libs/bootstrap.min.js"></script>
+	<script src="js/libs/bootstrap-table.min.js"></script>
+	<script src="js/libs/bootstrap-table-zh-CN.min.js"></script><br />
+	<script src="js/libs/laydate.js"></script>
+	
+	<script src="js/src/commonUtils.js"></script>
+	<script src="js/src/ajax.js"></script>
+	<script src="js/src/auditItems.js"></script>
+	
+	<script>
+		AuditItems.init();
+	</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+	"status": 0,
+	"msg": "success",
+	"total": 100,
+	"rows": [
+		{
+			"id": 1,
+			"largeAreaName": "京津冀",
+			"schoolName": "北京回龙观"
+		}
+	]
+}

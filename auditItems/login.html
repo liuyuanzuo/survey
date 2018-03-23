@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/libs/jquery-1.9.1.min.js"></script>
+	</head>
+	<body>
+		<script>
+			$(function(){
+				$.ajax({
+					type:"get",
+					url:"http://20.14.3.21:8080/survey/projectAudit/show?username=admin&password=a5dec63ec01cefc0418f49aa3073c6b8",
+					async:true,
+					success: function(res){
+						window.location.href = "AuditItems.html";
+					}
+				});
+			})
+		</script>
+		
+	</body>
+</html>
