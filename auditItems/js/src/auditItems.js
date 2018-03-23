@@ -98,7 +98,7 @@ var AuditItems = {
 		});
 		// 点击查询按钮
 		$("#searchBtn").click(function(){
-			//alert("执行查询逻辑，刷新表格");
+			//alert("执行查询逻辑，刷新表格");//
 			$('#tb_departments').bootstrapTable("refresh");
 		});
 		
@@ -109,6 +109,7 @@ var AuditItems = {
 	
 		// 新增事件
 		$("#btnAdd").click(function() {
+			alert("")
 			$("#mainPage-inner").hide()
 			
 			///$("#newAddPage-wrapper")
