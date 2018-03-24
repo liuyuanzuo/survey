@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="css/basic.css" rel="stylesheet"/>
+		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+		
+		<link href="css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="css/bootstrap-editable.css" rel="stylesheet" />
+		<link href="css/bootstrap-table.min.css" rel="stylesheet"/>
+		<link href="css/font-awesome.css" rel="stylesheet"/>
+
+		
+
+	</head>
+	<body>
+		
+		
+		
+		<table border="" cellspacing="" cellpadding="" id="username" style="marign-top:20px;">
+			
+		</table>
+		<script src="js/libs/jquery-1.9.1.min.js"></script>
+		<script src="js/libs/bootstrap.min.js"></script>
+		<script src="js/src/bootstrap-editable.js"></script>
+		
+		<script src="js/libs/bootstrap-table.min.js"></script>
+		<script src="js/libs/bootstrap-table-zh-CN.min.js"></script><br />
+		<script src="js/src/bootstrap-table-editable.js"></script>
+		<script src="js/libs/laydate.js"></script>
+		
+		<script src="js/src/commonUtils.js"></script>
+		<script src="js/src/ajax.js"></script>
+		<script src="js/src/auditItems.js"></script>
+		<script type="text/javascript">
+		$(function () {
+	        $("#username").bootstrapTable({
+	            toolbar: "#toolbar",
+	            idField: "Id",
+	            pagination: true,
+	           /* showRefresh: true,
+	            search: true,*/
+	            clickToSelect: true,
+	            queryParams: function (param) {
+	            	param.a = 1;
+	                return {};
+	            },
+	            url: "http://127.0.0.1:8020/json/editable.json",
+	            columns: [{
+	                checkbox: true
+	            }, {
+	                field: "UserName",
+	                title: "学生姓名",
+	                editable: {
+	                    type: 'text',
+	                    title: '学生姓名',
+	                    validate: function (v) {
+	                        if (!v) return '用户名不能为空';
+	
+	                    }
+	                }
+	            }, {
+	                field: "Age",
+	                title: "年龄",
+	            }, {
+	                field: "Birthday",
+	                title: "生日",
+	                formatter: function (value, row, index) {
+	                    var date = eval('new ' + eval(value).source)
+	                    return date.format("yyyy-MM-dd");
+	                }
+	            },
+	            {
+	                field: "DeptName",
+	                title: "部门"
+	            }, {
+	                field: "Hobby",
+	                title: "爱好"                
+	            }],
+	            onEditableSave: function (field, row, oldValue, $el) {
+	                $.ajax({
+	                    type: "post",
+	                    url: "http://127.0.0.1:8020/json/editable.json",
+	                    data: row,
+	                    dataType: 'JSON',
+	                    success: function (data, status) {
+	                        if (status == "success") {
+	                            alert('提交数据成功');
+	                        }
+	                    },
+	                    error: function () {
+	                        alert('编辑失败');
+	                    },
+	                    complete: function () {
+	
+	                    }
+	
+	                });
+	            }
+	        });
+		});
+		</script>
+		</body>
+</html>

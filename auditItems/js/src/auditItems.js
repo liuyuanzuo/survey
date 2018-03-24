@@ -7,6 +7,7 @@ var AuditItems = {
 		this.initData();
 		this.initEvents();
 		this.initTable();
+		this.initNewAddTable();
 	},
 	initElements: function(){
 		var self = this;
@@ -36,6 +37,20 @@ var AuditItems = {
 	initData: function(){
 		var self = this;
 		// 初始化大区数据
+		Ajax.getBigArea(CommonUtils.bigAreaUrl(), function(res){
+			if(res.status === 0){
+				var html = self.selectTips;
+				var bigAreaArray = res.rows;
+				for (var i = 0; i < bigAreaArray.length; i++) {
+					html += '<option text="' + bigAreaArray[i].largeareaname + '"value="' + bigAreaArray[i].id + '">' + bigAreaArray[i].largeareaname + '</option>';
+					// 查询条件的大区
+					$("#bigArea").html(html);
+					// 模态框的大区
+					$("#bigRegion_add").html(html);
+				}
+			}
+		})
+		// 新增页面- 初始化专业数据
 		Ajax.getBigArea(CommonUtils.bigAreaUrl(), function(res){
 			if(res.status === 0){
 				var html = self.selectTips;
@@ -106,11 +121,11 @@ var AuditItems = {
 		
 		
 		
-	
+		
 		// 新增事件
-		$("#btnAdd").click(function() {
-			alert("")
-			$("#mainPage-inner").hide()
+		$("#btnAddScore").click(function() {
+			$("#page-inner").hide()
+			$("#newAddPage-wrapper").show();
 			
 			///$("#newAddPage-wrapper")
 			// 初始化模态框中的值
@@ -148,6 +163,7 @@ var AuditItems = {
 			}
 			window.location.href = "http://20.14.3.47:8082/survey/projectAudit/export?regionid="+bigAreaId+"&schoolid="+schoolId+"&majorid="+subjectId+"&beginDate="+startInput+"&endDate="+endInput;
 		});
+		
 		
 		// 新增模态框的大区change
 		$("#bigRegion_add").change(function(){
@@ -196,8 +212,6 @@ var AuditItems = {
 		$("#cancelBtn,#abolishBtn").click(function(){
 			self.resetModalValue();
 		});
-		
-		
 		
 		// 保存按钮
 		$("#saveBtn").click(function(){
@@ -480,7 +494,7 @@ var AuditItems = {
                  	offset: params.offset,
                   	limit: params.limit,
                   	order: "desc"
-               };
+                };
             },
 			columns : [ {
 				field : 'id',
@@ -649,13 +663,52 @@ var AuditItems = {
 						//提交转化后的时间
 						$("#commitDateEdit").val(CommonUtils.timetrans(row.submitTime));
 					}
-					
 				}
 			} ]
 		});
-	}
-	
-	
+	},
+	initNewAddTable:function(){   //新增的表格
+		$("#tb_user").bootstrapTable({
+        	dataType : "json",
+            //url: CommonUtils.newAddUrl(),
+            url: 'json/testEditable.json',
+            method:"post",
+            cache:false,
+            pagination: true,
+            clickToSelect: true,
+            showRefresh : false, //刷新按钮
+			showToggle : false, // 切换视图
+			showColumns : false, //列选择按钮
+            columns: [{
+                field: 'enrollCode',
+                title: 'XXX',
+                align: 'center',
+				valign: 'middle',
+				editable: {
+                    type: 'text',  //编辑框的类型。支持text|textarea|select|date|checklist等
+                    title: '学生姓名',    //编辑框的标题
+                    mode: 'inline',      //编辑框的模式：支持popup和inline两种模式，默认是popup
+                    validate: function (v) {   //字段验证
+                        if (!v) return '用户名不能为空';
 
+                    }
+	            }
+            },{
+                field: 'studentName',
+                title: '学员姓名11',
+                align: 'center',
+				valign: 'middle',
+				editable: {
+                    type: 'text',  //编辑框的类型。支持text|textarea|select|date|checklist等
+                    title: '学生姓名',    //编辑框的标题
+                    mode: 'inline',      //编辑框的模式：支持popup和inline两种模式，默认是popup
+                    validate: function (v) {   //字段验证
+                        if (!v) return '用户名不能为空';
+
+                    }
+	            }
+            }]
+        });
+	}
 }
 

@@ -8,8 +8,25 @@
 <link href="css/basic.css" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/bootstrap-editable.css" rel="stylesheet" />
 <link href="css/bootstrap-table.min.css" rel="stylesheet"/>
 <link href="css/font-awesome.css" rel="stylesheet"/>
+
+
+<style>
+	#newAddPage-wrapper{
+		display:none;
+	}
+</style>
+
+
+
+<!--可以编辑的表格的文件-->
+
+
+
+
+
 </head>
 <body>
 	<div id="wrapper">
@@ -38,13 +55,18 @@
 					<li><a href="dataAnalysis.jsp"><i class="fa fa-bar-chart-o"></i>数据分析</a></li>
 					<li><a href="dataStatistics.jsp"><i class="fa fa-key"></i>数据统计</a></li>
 					<li><a href="exportTable.jsp"><i class="glyphicon glyphicon-file"></i>导出表格</a></li>
-					<li id="auditItemsId"><a class="active-menu" href="AuditItems.html"><i class="glyphicon glyphicon-list-alt"></i>项目审阅</a></li>
+					<li id="auditItemsId">
+						<a class="active-menu" href="AuditItems.html">
+							<i class="glyphicon glyphicon-list-alt"></i>项目审阅
+						</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
 		<!-- 主页面  -->
 		<div id="page-wrapper" >
-			<div id="page-inner" id="mainPage-inner">
+			<!--初始页面-->
+			<div id="page-inner">
 				<!--主页面头部-->
 				<div class="portlet box grey">
 					<div class="portlet-title">
@@ -104,7 +126,7 @@
 						</div>
 					</div>
 					<div id="btnAdd" style="margin-right: 5px; margin-top: -1px;">
-						<button href="#" class="btn btn-default btnAdd">
+						<button href="#" class="btn btn-default btnAdd" id="btnAddScore">
 							<span class="glyphicon glyphicon-plus"></span>新增	
 						</button>
 						<button  href="#" class="btn btn-default daochu">
@@ -127,12 +149,124 @@
 					<div class="portlet box grey">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="icon-user"></i>项目审阅
+								<i class="icon-user"></i>项目审阅—新增数据
 							</div>
+						</div> 
+						<!--表单-->
+						<div class="panel-body">
+							<form class="form-horizontal">
+								<!--<div class="row">-->
+								<!-- 编号+专业-->
+								<div class="form-group">
+								    <label for="testInfoNum_add" class="col-sm-1 control-label">班级编号</label>
+								    <div class="col-sm-5">
+								      <input type="text" name="testInfoNum_add" class="form-control" id="testInfoNum_add" placeholder="">
+								    </div>
+								    
+								    <label for="major_add" class="col-sm-1 control-label">专业</label>
+								    <div class="col-sm-5">
+										<select class="form-control" name="major_add" id="major_add" >
+											<option value>请选择</option>
+										</select>
+									</div>    
+								</div>
+								<!-- 大区+校区-->
+								<div class="form-group">
+									<!--后台返回数据-->
+								    <label for="bigRegion_add" class="col-sm-1 control-label">大区</label>
+								    <div class="col-sm-5">
+								      <input type="text" name="bigRegion_add" class="form-control" id="bigRegion_add" placeholder="">
+								    </div>
+								    <!--后台返回数据-->
+								    <label for="scholl_add" class="col-sm-1 control-label">校区</label>
+								    <div class="col-sm-5">
+								      <input type="text" name="scholl_add" class="form-control" id="scholl_add" placeholder="">
+								    </div>
+								</div>
+								<!--现场老师+教研老师-->
+								<div class="form-group">
+								    <label for="teacherInClass_add" class="col-sm-1 control-label">现场老师</label>
+								    <div class="col-sm-5">
+								      <input type="text" name="teacherInClass_add" class="form-control" id="teacherInClass_add" placeholder="">
+								    </div>
+								
+								    <label for="teacherInLine_add" class="col-sm-1 control-label">教研老师</label>
+								    <div class="col-sm-5">
+								      <input type="text" name="teacherInLine_add" class="form-control" id="teacherInLine_add" placeholder="">
+								    </div>
+								</div>
+								<!--班级阶段+人次-->
+								<div class="form-group">
+								    <label for="classPhrase_add" class="col-sm-1 control-label">班级阶段</label>
+								    <div class="col-sm-5">
+								      <input type="text" name="classPhrase_add" class="form-control" id="classPhrase_add" placeholder="">
+								    </div>
+								    <!--后台返回数据-->
+								    <label for="studentsNum_add" class="col-sm-1 control-label">人次</label>
+								    <div class="col-sm-5">
+								      <input type="number" name="studentsNum_add" class="form-control" id="studentsNum_add" placeholder="">
+								    </div>
+								</div>
+								<!--审阅状态+提交日期-->
+								<div class="form-group">
+									<label for="shenyueStatus_add" class="col-sm-1 control-label">审阅状态</label>
+								    <div class="col-sm-5">
+								    	<select name="shenyueStatus" name="shenyueStatus_add" class="form-control"  id="shenyueStatus_add">
+											<option value>请选择</option>
+											<option value="未阅">未阅</option>
+											<option value="已阅">已阅</option>
+										</select>
+								    </div>
+								    <label for="submitDate_add" class="col-sm-1 control-label">提交日期</label>
+								    <div class="col-sm-5">
+								      <input id="submitDate_add" name="submitDate_add" class="form-control" type="text"></input>
+								    </div>
+								</div>
+								<div class="form-group">
+									<button name="btn" id="btnGetStudentMsg">获得学生信息</button>
+								</div>
+								<!--每个学员的成绩录入-->
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="icon-user"></i>每个学员的成绩录入
+									</div>
+								</div> 
+								<!--学生情况-->
+								
+								<div class="form-group">
+								    <table border="" cellspacing="" cellpadding="" id="tb_user"></table>
+								
+								</div>
+								
+
+								<!--总体评价-->
+								<div class="portlet-title">
+									<div class="caption">
+										<i class="icon-user"></i>总体评价
+									</div>
+								</div> 
+								<!--项目评价-->
+								<div class="form-group">
+								    <label for="evaluate_add" class="col-sm-1 control-label">项目评价</label>
+								    <div class="col-sm-11">
+								     	<textarea style="resize: none;" class="form-control" rows="3" name="evaluate_add" id="evaluate_add" ></textarea>
+								    </div>
+								
+								</div>
+								<!--原因-->
+								<div class="form-group">
+								    <label for="reason_add" class="col-sm-1 control-label">原因</label>
+								    <div class="col-sm-11">
+								      <textarea style="resize: none;" class="form-control" rows="3" name="reason_add"  id="reason_add"></textarea>
+								    </div>
+								</div>	
+								<!--</div>	-->
+							</form>
+							<form class='uploadForm' id='bannerform' enctype='multipart/form-data'>
+								<input name='uploadFile' accept='.doc,.docx,.xlsx,.xls'  type="file"  id="file_add"></input>
+							</form>
 						</div>
-						
-						
-					</div>
+					</div>	
 				</div>
 			</div><!--主页面结束-->
 		</div><!--主页面结束-->
@@ -478,9 +612,6 @@
 		<img src="images/loader.gif" alt="等待图标" />
 	</div>
 	
-	
-	
-	
 	<!--尾部-->
 	<div id="footer-sec">
 		<div class="footer">
@@ -494,16 +625,30 @@
 	</div>
 	<script src="js/libs/jquery-1.9.1.min.js"></script>
 	<script src="js/libs/bootstrap.min.js"></script>
+	<script src="js/src/bootstrap-editable.js"></script>
 	<script src="js/libs/bootstrap-table.min.js"></script>
 	<script src="js/libs/bootstrap-table-zh-CN.min.js"></script><br />
+	<script src="js/src/bootstrap-table-editable.js"></script>
 	<script src="js/libs/laydate.js"></script>
 	
 	<script src="js/src/commonUtils.js"></script>
 	<script src="js/src/ajax.js"></script>
 	<script src="js/src/auditItems.js"></script>
 	
+	
+
+
+
 	<script>
-		AuditItems.init();
+		AuditItems.init();// 新增事件
+		
+		//$('#tb_user').bootstrapTable("refresh");
 	</script>
+	<script>
+		
+
+	   
+	</script>
+	　
 </body>
 </html>

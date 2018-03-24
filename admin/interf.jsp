@@ -32,6 +32,16 @@ http://20.14.3.47:8082/survey/major/queryBySchool?schoolId=15 <br/>
 查询校区开设的专业<br/>
 参数：schoolId(校区Id)<br/>
 <hr/>
+http://20.14.3.47:8082/survey/major/queryAllMajor <br/>
+查询所有的专业<br/>
+<hr/>
+
+<h4>班级</h4>
+http://20.14.3.47:8082/survey/tclass/getClassInfo?classCode=B3203201711001&majorId=1 <br/>
+查询班级信息(包括班级内学员信息)<br/>
+参数：classCode(testInfo系统中班级编号)、majorId(专业)<br/>
+<hr/>
+
 
 <h4>项目审核</h4>
 http://20.14.3.47:8082/survey/projectAudit/save <br/>

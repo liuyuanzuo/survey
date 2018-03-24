@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="css/basic.css" rel="stylesheet"/>
+		<link href="css/style.css" rel="stylesheet" type="text/css"/>
+		
+		<link href="css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="css/bootstrap-editable.css" rel="stylesheet" />
+		<link href="css/bootstrap-table.min.css" rel="stylesheet"/>
+		<link href="css/font-awesome.css" rel="stylesheet"/>
+
+		
+
+	</head>
+	<body>
+		
+		<table border="" cellspacing="" cellpadding="" id="tb_user"></table>
+		
+		<button id="btn">aaaa</button>
+		
+		<script src="js/libs/jquery-1.9.1.min.js"></script>
+		<script src="js/libs/bootstrap.min.js"></script>
+		<script src="js/src/bootstrap-editable.js"></script>
+		
+		<script src="js/libs/bootstrap-table.min.js"></script>
+		<script src="js/libs/bootstrap-table-zh-CN.min.js"></script><br />
+		<script src="js/src/bootstrap-table-editable.js"></script>
+		<script src="js/libs/laydate.js"></script>
+		
+		<script src="js/src/commonUtils.js"></script>
+		<script src="js/src/ajax.js"></script>
+		<script src="js/src/auditItems.js"></script>
+		<script type="text/javascript">
+		
+			
+			
+			function initNewAddTable(){   //新增的表格
+				$("#tb_user").bootstrapTable({
+		        	dataType : "json",
+		            //url: CommonUtils.newAddUrl(),
+		            url: 'json/testEditable.json',
+					height : 300, // 设置高度，会启用固定表头的特性,
+					queryParams: function (params) {
+		            	console.log(params);
+		            	// offset: 偏移量 limit: 每页的数目 order: asc desc
+		            	var classCode = $("#testInfoNum_add").val();
+		            	var majorId = $("#major_add").find('option:selected').val();
+		                return {
+		                	classCode: "B3203201711001", // 学校编号
+		            	    majorId: 1           
+		                	/*type: 0,
+		                 	offset: params.offset,
+		                  	limit: params.limit,
+		                  	order: "desc"*/
+		                };   
+		            },
+	            
+		            responseHandler: function(res) {
+		            	console.log(res);
+		            	return {
+		            		"status":0,
+		                    "rows": res.rows.studentVoList
+		               };
+		            },
+		            columns: [{
+		                field: 'enrollCode',
+		                title: 'XXX',
+		                align: 'center',
+						valign: 'middle'
+		            },{
+		                field: 'studentName',
+		                title: '学员姓名11',
+		                align: 'center',
+						valign: 'middle'
+		            }]
+		        });
+		    }
+			initNewAddTable();
+			$("#btn").click(function(){
+			 	alert(11)
+		        $('#tb_user').bootstrapTable("refresh");
+		       
+		    })
+		</script>
+		</body>
+</html>

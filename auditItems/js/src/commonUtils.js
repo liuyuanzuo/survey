@@ -30,5 +30,8 @@ var CommonUtils = {
 	    //var m = (date.getMinutes() <10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
 	    //var s = (date.getSeconds() <10 ? '0' + date.getSeconds() : date.getSeconds());
 	    return Y+M+D;
+	},
+	newAddUrl:function(){
+		return this.baseUrl+"/tclass/getClassInfo";
 	}
 }
